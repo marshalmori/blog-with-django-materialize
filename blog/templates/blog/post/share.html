@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Compartilhando Post{% endblock %}
+
+{% block content %}
+  {% if sent %}
+      <h5>E-mail enviado com sucesso</h5>
+      <p>
+        "{{ post.title }}" foi enviado com sucesso para o endereço: {{ form.to }}
+      </p>
+  {% else %}
+    <h5>Compartilhe por email - "{{ post.title }}" - por email.</h5>
+    <div class="row">
+      <form class='col s6' action="." method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button class="btn waves-effect waves-light" type="submit">Enviar
+            <i class="material-icons right">send</i>
+        </button>
+        
+      </form>
+    </div>
+  {% endif %}
+{% endblock %}
