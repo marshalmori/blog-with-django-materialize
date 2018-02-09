@@ -2,18 +2,33 @@
 
 {% block title %}Blog do Marshal{% endblock title %}
 
+
 {% block content %}
 
+  {% if tag %}
+      <h5>Posts com a tag "{{ tag.name }}"</h5>
+  {% endif %}
   {% for post in posts %}
+
+
     <h2>
       <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
     </h2>
-  <p class="date">Publicado em: {{ post.publish }} por {{ post.author }}</p>
 
-  {{ post.body|truncatewords:60|linebreaks }}
-  <hr>
+    <p class="date">Publicado em: {{ post.publish }} por {{ post.author }}</p>
+    <!-- <p>Tags: {{ post.tags.all|join:", " }}</p> -->
+    Tags:
+    {% for tag in post.tags.all %}
+        <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+          {{ tag.name }}
+        </a>
+        {% if not forloop.last %}, {% endif %}
+    {% endfor %}
+
+    {{ post.body|truncatewords:60|linebreaks }}
+    <hr>
   {% endfor %}
 
-  {% include "blog/pagination.html" with page=page_obj %}
+  {% include "blog/pagination.html" with page=posts %}
   <hr>
 {% endblock %}

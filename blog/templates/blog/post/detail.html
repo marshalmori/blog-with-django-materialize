@@ -20,6 +20,16 @@
       <a href="{% url 'blog:post_share' post.id %}" class="waves-effect waves-light btn"><i class="material-icons left">screen_share</i>Compartilhar</a>
     </p>
     <hr>
+      <h4>Posts similares</h4>
+      {% for post in similar_posts %}
+          <p>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+          </p>
+      {% empty %}
+          Não há posts similares.
+      {% endfor %}
+
+    <hr>
 
     {% with comments.count as total_comments %}
       <h6>
@@ -46,7 +56,7 @@
     {% if new_comment %}
       <h4>Seu comentário foi adicionado com sucesso!!</h4>
     {% else %}
-      <h4>Adicione um novo comentário</h4>
+      <h5>Adicione um novo comentário</h5>
       <div class="row">
         <form class='col s6'  method="post">
           {{ comment_form.as_p }}
