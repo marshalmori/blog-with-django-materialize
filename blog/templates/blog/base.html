@@ -1,4 +1,6 @@
+{% load blog_tags %}
 {% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,32 +48,40 @@
   <div class="container">
     <div class="section">
 
+      <p class="purple-text darken-4-text">Meu blog tem um total de {% total_posts %} posts publicados.</p>
+
       <!--   Icon Section   -->
       <div class="row">
         <div class="col s12 m4">
           <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">Speeds up development</h5>
+            <h2 class="center light-blue-text"><i class="material-icons">event_note</i></h2>
+            <h5 class="center">Quantidade de Posts</h5>
 
-            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+            <p class="light">Até o presente momento temos <strong><span class="purple-text darken-4-text" >{% total_posts %}</span></strong> posts em nossa plataforma e esse valor não para de crescer.
+              Nossa quantidade cresce devido ao grande interesse do escritor em divulgar suas pesquisas com o público em geral.</p>
           </div>
         </div>
 
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">User Experience Focused</h5>
-
-            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+            <h5 class="center">Últimos Posts Publicados</h5>
+            <p class="light">{% show_latest_posts 5%}</p>
           </div>
         </div>
 
-        <div class="col s12 m4">
+        <div class=" center col s12 m4">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">Easy to work with</h5>
-
-            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+            <h5 class="center">Posts mais Comentados</h5>
+              {% get_most_commented_posts as most_commented_posts %}
+              <ul>
+                {% for post in most_commented_posts %}
+                  <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
           </div>
         </div>
       </div>

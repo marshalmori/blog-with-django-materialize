@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load blog_tags %}
 
 {% block title %} {{ post.title }} {% endblock title %}
 
@@ -12,7 +13,7 @@
     </p>
     <hr>
 
-    {{ post.body|linebreaks }}
+    {{ post.body|markdown }}
 
     <br><br>
 
@@ -46,7 +47,7 @@
           Data/Hora : {{ comment.created }}
           </strong>
         </p>
-        {{ comment.body|linebreaks }}
+        {{ comment.body|markdown }}
         <hr>
       </div>
     {% empty %}
