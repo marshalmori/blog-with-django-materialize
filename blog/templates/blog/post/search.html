@@ -1,0 +1,27 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Pesquisa{% endblock %}
+
+{% block content %}
+  {% if "query" in request.GET %}
+    <h1>Posts contendo "{{ cd.query }}"</h1>
+    <h3>Encontrado {{ total_results }} resultado{{ total_results|pluralize }}</h3>
+    {% for result in results %}
+      {% with post=result.object %}
+          <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+          {{ post.body|truncatewords:10 }}
+      {% endwith %}
+    {% empty %}
+      <p>Não há resultados para essa busca.</p>
+    {% endfor %}
+      <p><a href="{% url 'blog:post_search' %}">Pesquisar novamente</a></p>
+    {% else %}
+      <h1>Pesquisar por posts</h1>
+      <form action="." method="get">
+        {{ form.as_p }}
+        <button class="btn waves-effect waves-light" type="submit">Pesquisar
+            <i class="material-icons right">send</i>
+        </button>
+      </form>
+    {% endif %}
+    {% endblock %}
